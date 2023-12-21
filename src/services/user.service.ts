@@ -10,7 +10,11 @@ async function getUsers({limit, page, typeUser, name}: any, type: string) {
     if(type !== 'owner') return GlobalError.NOT_PERMITED_ACCESS;
     const offset = page === 1 ? 0 : Math.floor((limit * page) - limit);
     const isDive = typeUser === 'drive';
-    let filter: any = {status: {[Op.eq]: 'active'}};
+    let filter: any = { 
+        status: { 
+            [Op.eq]: ['active' , 'deleted']
+        }
+    };
     if(typeUser) filter.type = {[Op.eq]: typeUser}
     if(name) filter.name = {[Op.like]: `%${name}%`}
     
