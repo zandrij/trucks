@@ -12,7 +12,7 @@ async function getUsers({limit, page, typeUser, name}: any, type: string) {
     const isDive = typeUser === 'drive';
     let filter: any = { 
         status: { 
-            [Op.eq]: ['active', 'deleted']
+            [Op.or]: ['active', 'deleted']
         }
     };
     if(typeUser) filter.type = {[Op.eq]: typeUser}
