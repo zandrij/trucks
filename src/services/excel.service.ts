@@ -59,6 +59,7 @@ async function generateExcelReport({route, start, end}:any, type: string) {
     if(route === 'sales') {
         const rows = await Payment.findAll({
             subQuery: false,
+            attributes: { exclude: ['image', 'updatedAt']},
             where: { ...dates, status: "paid" },
             order: [['id', 'DESC']],
         });
