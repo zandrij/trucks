@@ -214,7 +214,7 @@ async function getSalesReport({limit, page, start, end}: any, type: string) {
         where: { ...dates, status: "paid" },
         subQuery: false,
         order: [['id', 'DESC']],
-        include: ['client'],
+        // include: ['client'],
     });
     return { rows, limit, page};
 }
