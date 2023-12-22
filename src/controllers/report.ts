@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { RequestUser } from "../interfaces/users";
-import { getCustomerBuyTotal, getDriverDayEnd, getPathWithDays, getTrucksReport } from "../services/report.service";
+import { getCustomerBuyTotal, getDriverDayEnd, getPathWithDays, getSalesReport, getTrucksReport } from "../services/report.service";
 import { handleHttp } from "../utils/error.handle";
 import { generateExcelReport } from "../services/excel.service";
 
@@ -70,10 +70,24 @@ async function getTrucksReportCtrl({user, query}:RequestUser, res: Response) {
     }
 }
 
+async function getSalesReportCtrl({user, query}:RequestUser, res: Response) {
+    try {
+        const response = await getSalesReport(query, `${user?.type}`);
+        return res.status(200).json({
+            data: response,
+            ok: true,
+            // message: "agregado exitosamente"
+        });
+    } catch (error) {
+        handleHttp(res, "INTERNAL_SERVER_ERROR", error);
+    }
+}
+
 export {
     getCustomerBuyCtrl,
     getPathWithDaysCtrl,
     generateExcelReportCtrl,
     getDriverDayEndCtrl,
-    getTrucksReportCtrl
+    getTrucksReportCtrl,
+    getSalesReportCtrl
 }

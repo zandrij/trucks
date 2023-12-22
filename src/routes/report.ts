@@ -2,7 +2,7 @@ import { Router } from "express";
 import { schemaValidator } from "../middleware/schemaValidator";
 import { checkJwt } from "../middleware/session";
 import { generateExcelReportSchema, getReportSchema } from "../schemas/report.schema";
-import { generateExcelReportCtrl, getCustomerBuyCtrl, getDriverDayEndCtrl, getPathWithDaysCtrl, getTrucksReportCtrl } from "../controllers/report";
+import { generateExcelReportCtrl, getCustomerBuyCtrl, getDriverDayEndCtrl, getPathWithDaysCtrl, getSalesReportCtrl, getTrucksReportCtrl } from "../controllers/report";
 // import { AddUserToPathCtrl, createOnlyPathCtrl, getOnePathCtrl, getOnePathWithUsersCtrl, getPathCtrl, removeUserToPathCtrl, updatePathCtrl } from "../controllers/path";
 // import { addUserToPathSchema, createOnlyPathSchema, getOnePathSchema, getPathsSchema, removeUserToPathSchema, updatePathSchema } from "../schemas/path.schema";
 
@@ -149,6 +149,7 @@ router.get('/drive', checkJwt, schemaValidator(getReportSchema), getDriverDayEnd
 router.get('/', checkJwt, schemaValidator(generateExcelReportSchema), generateExcelReportCtrl);
 
 router.get('/trucks', checkJwt, schemaValidator(getReportSchema), getTrucksReportCtrl);
+router.get('/sales', checkJwt, schemaValidator(getReportSchema), getSalesReportCtrl);
 
 export default router;
 

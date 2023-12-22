@@ -30,6 +30,7 @@ const getReportSchema = z.object({
 });
 
 
+
 const generateExcelReportSchema = z.object({
     query: z.object({
         route: z.string().trim().nonempty(),

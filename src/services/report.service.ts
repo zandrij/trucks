@@ -203,6 +203,22 @@ async function getTrucksReport({limit, page, start, end}: any, type: string) {
     return {total: 0, rows, limit, page};
 }
 
+async function getSalesReport({limit, page, start, end}: any, type: string) {
+    if(type !== 'owner') return GlobalError.NOT_PERMITED_ACCESS;
+    const offset = page === 1 ? 0 : Math.floor((limit * page) - limit);
+    const dates = !start || !end ? {} : {createdAt: {[Op.between]: [start, end]}}
+
+    const rows = await Payment.findAll({
+        limit,
+        offset,
+        where: { ...dates },
+        subQuery: false,
+        order: [['id', 'DESC']],
+        include: ['client'],
+    });
+    return { rows, limit, page};
+}
+
 // path con contador de recorridos o jornadas
 // async function getMunicipiosReport({limit, page, start, end}: any, type: string) {
 //     if(type !== 'owner') return GlobalError.NOT_PERMITED_ACCESS;
@@ -249,5 +265,6 @@ export {
     getCustomerBuyTotal,
     getPathWithDays,
     getDriverDayEnd,
-    getTrucksReport
+    getTrucksReport,
+    getSalesReport
 }
