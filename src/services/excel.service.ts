@@ -56,6 +56,15 @@ async function generateExcelReport({route, start, end}:any, type: string) {
         return generateXslx(rows.map(e => e.toJSON()), route);
     }
 
+    if(route === 'sales') {
+        const rows = await Payment.findAll({
+            subQuery: false,
+            where: { ...dates, status: "paid" },
+            order: [['id', 'DESC']],
+        });
+        return generateXslx(rows.map(e => e.toJSON()), route);
+    }
+
     const rows = await User.findAll({
         subQuery: false,
         order: [['total', 'DESC']],
@@ -76,6 +85,7 @@ async function generateExcelReport({route, start, end}:any, type: string) {
         ],
         group: ['User.id']
     });
+    
     return generateXslx(rows.map(e => e.toJSON()), route);
 
 }
