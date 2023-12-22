@@ -9,6 +9,7 @@ const updateUserSchema = z.object({
         phone: z.string().min(8).trim().optional(),
         device: z.string().trim().optional(),
         address: z.string().trim().optional(),
+        status: z.string().trim().optional(),
     }),
     params: z.object({
         id: z.string().nonempty().transform((val, ctx) => {
