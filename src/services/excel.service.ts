@@ -62,6 +62,8 @@ async function generateExcelReport({route, start, end}:any, type: string) {
             where: { ...dates, status: "paid" },
             order: [['id', 'DESC']],
         });
+
+        console.log({rows} )
         return generateXslx(rows.map(e => e.toJSON()), route);
     }
 
@@ -85,7 +87,7 @@ async function generateExcelReport({route, start, end}:any, type: string) {
         ],
         group: ['User.id']
     });
-    
+
     return generateXslx(rows.map(e => e.toJSON()), route);
 
 }
