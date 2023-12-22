@@ -211,7 +211,7 @@ async function getSalesReport({limit, page, start, end}: any, type: string) {
     const rows = await Payment.findAll({
         limit,
         offset,
-        where: { ...dates },
+        where: { ...dates, status: "paid" },
         subQuery: false,
         order: [['id', 'DESC']],
         include: ['client'],
